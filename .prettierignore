@@ -1,0 +1,13 @@
+node_modules
+dist
+build
+coverage
+.expo
+.yarn
+*.lock
+.expo
+.husky
+android
+ios
+metro.config.js
+babel.config.js
