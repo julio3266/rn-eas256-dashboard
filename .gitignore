@@ -12,14 +12,12 @@ expo-env.d.ts
 *.key
 *.mobileprovision
 
+.env
 .metro-health-check*
-
 npm-debug.*
 yarn-debug.*
 yarn-error.*
-
 .DS_Store
 *.pem
-
 .env*.local
 *.tsbuildinfo

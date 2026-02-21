@@ -1,19 +1,30 @@
-export interface EncryptedResponse {
-    data: string;
-    iv: string;
-    key: string;
+import { API_URL } from '@config';
+
+export interface RawEncryptedPayload {
+    encrypted: {
+        iv: string;
+        authTag: string;
+        encrypted: string;
+    };
+    secretKey: string;
+    algorithm: string;
 }
 
 export class RemoteUserDataSource {
-    async fetchUsers(): Promise<EncryptedResponse> {
-        const response = await fetch(
-            'https://n8n-apps.nlabshealth.com/webhook/data-5dYbrVSlMVJxfmco',
-        );
+    private API_URL = API_URL;
+
+    async fetchUsers(): Promise<RawEncryptedPayload> {
+        const response = await fetch(`${this.API_URL}/webhook/data-5dYbrVSlMVJxfmco`);
 
         if (!response.ok) {
             throw new Error('Network error');
         }
 
-        return response.json();
+        const body = await response.json();
+        if (!body.success) {
+            throw new Error('Server returned unsuccessful response');
+        }
+
+        return body.data as RawEncryptedPayload;
     }
 }

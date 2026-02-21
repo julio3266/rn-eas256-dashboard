@@ -11,6 +11,8 @@ module.exports = function (api) {
                         '@data': './src/data',
                         '@domain': './src/domain',
                         '@presentation': './src/presentation',
+                        '@main': './src/main',
+                        '@config': './src/config.ts',
                     },
                 },
             ],

@@ -1,7 +1,7 @@
 {
-  "expo": {
-    "name": "rn-aes256-dashboard",
-    "slug": "rn-aes256-dashboard",
-    "version": "1.0.0"
-  }
+    "expo": {
+        "name": "rn-aes256-dashboard",
+        "slug": "rn-aes256-dashboard",
+        "version": "1.0.0"
+    }
 }

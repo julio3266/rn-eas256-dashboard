@@ -1,11 +1,13 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@data/*": ["src/data/*"],
-      "@domain/*": ["src/domain/*"],
-      "@presentation/*": ["src/presentation/*"]
-    }
-  },
-  "extends": "expo/tsconfig.base"
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@data/*": ["src/data/*"],
+            "@domain/*": ["src/domain/*"],
+            "@presentation/*": ["src/presentation/*"],
+            "@main/*": ["src/main/*"],
+            "@config": ["src/config.ts"]
+        }
+    },
+    "extends": "expo/tsconfig.base"
 }
