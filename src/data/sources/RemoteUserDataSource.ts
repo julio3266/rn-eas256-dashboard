@@ -1,4 +1,5 @@
 import { API_URL } from '@config';
+import { HttpClient } from '@data/http/httpClient';
 
 export interface RawEncryptedPayload {
     encrypted: {
@@ -10,21 +11,22 @@ export interface RawEncryptedPayload {
     algorithm: string;
 }
 
+interface ApiResponse<T> {
+    success: boolean;
+    data: T;
+}
+
 export class RemoteUserDataSource {
-    private API_URL = API_URL;
+    private readonly endpoint = `${API_URL}/webhook/data-5dYbrVSlMVJxfmco`;
+    constructor(private httpClient: HttpClient) {}
 
     async fetchUsers(): Promise<RawEncryptedPayload> {
-        const response = await fetch(`${this.API_URL}/webhook/data-5dYbrVSlMVJxfmco`);
+        const body = await this.httpClient.get<ApiResponse<RawEncryptedPayload>>(this.endpoint);
 
-        if (!response.ok) {
-            throw new Error('Network error');
-        }
-
-        const body = await response.json();
         if (!body.success) {
             throw new Error('Server returned unsuccessful response');
         }
 
-        return body.data as RawEncryptedPayload;
+        return body.data;
     }
 }
