@@ -1,11 +1,14 @@
-import { HttpClient } from './httpClient';
+import { HttpClient, HttpResponse } from './HttpClient';
 
 export class FetchHttpClient implements HttpClient {
-    async get<T>(url: string): Promise<T> {
+    async get<T>(url: string): Promise<HttpResponse<T>> {
         const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Erro ao buscar dados');
-        }
-        return response.json();
+
+        const data = (await response.json()) as T;
+
+        return {
+            status: response.status,
+            data,
+        };
     }
 }

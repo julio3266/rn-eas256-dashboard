@@ -1,5 +1,5 @@
-import { API_URL } from '@config';
-import { HttpClient } from '@data/http/httpClient';
+import { AuthExpiredError } from '@data/errors/AuthExpiredError';
+import { HttpClient, HttpResponse } from '@data/http/HttpClient';
 
 export interface RawEncryptedPayload {
     encrypted: {
@@ -15,18 +15,23 @@ interface ApiResponse<T> {
     success: boolean;
     data: T;
 }
-
 export class RemoteUserDataSource {
-    private readonly endpoint = `${API_URL}/webhook/data-5dYbrVSlMVJxfmco`;
+    private readonly endpoint = `${process.env.API_URL}`;
     constructor(private httpClient: HttpClient) {}
 
     async fetchUsers(): Promise<RawEncryptedPayload> {
-        const body = await this.httpClient.get<ApiResponse<RawEncryptedPayload>>(this.endpoint);
+        const response: HttpResponse<ApiResponse<RawEncryptedPayload>> = await this.httpClient.get<
+            ApiResponse<RawEncryptedPayload>
+        >(this.endpoint);
 
-        if (!body.success) {
+        if (response.status === 401) {
+            throw new AuthExpiredError();
+        }
+
+        if (!response.data.success) {
             throw new Error('Server returned unsuccessful response');
         }
 
-        return body.data;
+        return response.data.data;
     }
 }
