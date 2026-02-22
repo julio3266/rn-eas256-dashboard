@@ -1,12 +1,13 @@
+import { Theme } from '@presentation/theme/Theme';
 import { StyleSheet } from 'react-native';
 
-export const createStyles = () => {
+export const createStyles = (theme: Theme) => {
     return StyleSheet.create({
         container: {
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 16,
-            backgroundColor: 'gray',
+            padding: 12,
+            backgroundColor: theme.colors.shimmerBgPrimary,
             borderRadius: 8,
             gap: 12,
             marginBottom: 10,

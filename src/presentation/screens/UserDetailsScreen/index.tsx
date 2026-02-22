@@ -3,8 +3,7 @@ import { getUserByIdUseCase } from '@main/container';
 import { useTheme } from '@presentation/theme/useTheme';
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState, useMemo } from 'react';
-import { View, Text, Share, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, Button as RNButton, Share, ActivityIndicator } from 'react-native';
 
 import { createStyles } from './styles';
 
@@ -29,6 +28,17 @@ export const UserDetailsScreen = () => {
             .finally(() => setLoading(false));
     }, [userId]);
 
+    const handleShare = async () => {
+        if (!user) return;
+        try {
+            await Share.share({
+                message: `Confira o usuário: ${user.nome}\nEmail: ${user.email}`,
+            });
+        } catch (error) {
+            console.log('Share error', error);
+        }
+    };
+
     if (!user && !loading) {
         return (
             <View style={styles.container}>
@@ -38,16 +48,21 @@ export const UserDetailsScreen = () => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             {loading ? (
                 <ActivityIndicator />
             ) : (
                 <>
-                    <Text style={styles.title}>{user.nome}</Text>
-                    <Text style={styles.text}>Email: {user.email}</Text>
-                    <Text style={styles.text}>Telefone: {user.telefone}</Text>
+                    <Text style={styles.title}>{user?.nome}</Text>
+                    <Text style={styles.text}>Email: {user?.email}</Text>
+                    <Text style={styles.text}>Telefone: {user?.telefone}</Text>
+                    <RNButton
+                        title="Compartilhar"
+                        onPress={handleShare}
+                        color={theme.colors.primary}
+                    />
                 </>
             )}
-        </SafeAreaView>
+        </View>
     );
 };

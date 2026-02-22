@@ -1,3 +1,4 @@
+import { useTheme } from '@presentation/theme/useTheme';
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
 
@@ -10,7 +11,8 @@ interface SkeletonCardProps {
 }
 
 export const SkeletonCard: React.FC<SkeletonCardProps> = ({ repeat }) => {
-    const styles = useMemo(() => createStyles(), []);
+    const theme = useTheme();
+    const styles = useMemo(() => createStyles(theme), [theme]);
 
     const renderCard = (key?: number) => (
         <View key={key} style={styles.container}>
