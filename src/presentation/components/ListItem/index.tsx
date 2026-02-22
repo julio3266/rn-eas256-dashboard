@@ -8,14 +8,15 @@ import { createStyles } from './styles';
 
 export interface ListItemProps {
     user: User;
+    handleDetails: (user: User) => void;
 }
 
-export const ListItem: React.FC<ListItemProps> = ({ user }) => {
+export const ListItem: React.FC<ListItemProps> = ({ user, handleDetails }) => {
     const theme = useTheme();
     const styles = useMemo(() => createStyles(theme), [theme]);
     const { nome, telefone, id } = user;
     return (
-        <TouchableOpacity key={id} style={styles.userCard}>
+        <TouchableOpacity onPress={() => handleDetails(user)} key={id} style={styles.userCard}>
             <View style={styles.avatar}>
                 <Text style={styles.avatarText}>{nome.charAt(0)}</Text>
             </View>

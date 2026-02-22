@@ -6,8 +6,7 @@ import { RootState } from '@presentation/store';
 import { useAppDispatch, useAppSelector } from '@presentation/store/hooks';
 import { loadUsers } from '@presentation/store/thunks';
 import { useTheme } from '@presentation/theme/useTheme';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -24,11 +23,9 @@ export const HomeScreen = () => {
         dispatch(loadUsers());
     }, [dispatch]);
 
-    useFocusEffect(
-        useCallback(() => {
-            dispatch(loadUsers());
-        }, [dispatch]),
-    );
+    useEffect(() => {
+        dispatch(loadUsers());
+    }, [dispatch]);
 
     return (
         <SafeAreaView style={styles.container}>
