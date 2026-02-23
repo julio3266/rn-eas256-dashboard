@@ -16,7 +16,8 @@
         "*.{ts, tsx}": [
             "eslint --fix",
             "prettier . --write",
-            "eslint ."
+            "eslint .",
+            "test:watch"
         ]
     },
     "dependencies": {
